@@ -28,24 +28,16 @@ public class Cliente extends Persona {
         }
     }
 
-    public void inactivar() {
-        this.estado = false;
-        System.out.println("Cliente " + nombreCompleto + " inactivado correctamente");
-    }
-
     @Override
     public void mostrarResumen() {
 
         System.out.println("--CLIENTE--");
         System.out.println("Cliente: " + nombreCompleto);
-        System.out.println("Identificación: " + identificacion);
-        System.out.println("Teléfono: " + telefono);
+        System.out.println("Identificacion: " + identificacion);
+        System.out.println("Telefono: " + telefono);
         System.out.println("Correo: " + correo);
-        System.out.println("Fecha de inscripción: " + fechaInscripcion);
-        System.out.println("Estado: " + estado);
-
+        System.out.println("Fecha de inscripcion: " + fechaInscripcion);
         System.out.println("------------------------------------------------");
-
     }
 
     @Override

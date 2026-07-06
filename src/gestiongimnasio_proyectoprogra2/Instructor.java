@@ -28,7 +28,7 @@ public class Instructor extends Persona {
         System.out.println("Telefono: " + telefono);
         System.out.println("Edad: " + edad);
         System.out.println("Correo: " + correo);
-
+        System.out.println("------------------------------------------------");
     }
 
     @Override
@@ -36,10 +36,4 @@ public class Instructor extends Persona {
         return "Instructor especialidad: " + especialidad;
     }
 
-    public void inactivar() {
-        System.out.println("Instructor: inactivado");
-
-        System.out.println("-----------------------------------");
-
-    }
 }

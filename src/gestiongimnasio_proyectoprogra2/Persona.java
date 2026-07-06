@@ -15,7 +15,7 @@ public abstract class Persona implements Resumible {
         this.telefono = "";
         this.edad = "";
         this.correo = "";
-        this.estado = true;
+        this.estado = false;
     }
 
     public Persona(String identificacion, String nombreCompleto, String telefono, String edad, String correo) {
@@ -45,7 +45,7 @@ public abstract class Persona implements Resumible {
     public void setIdentificacion(String identificacion) {
 
         if (identificacion == null || identificacion.trim().equals("")) {
-            System.out.println("La identificación no es válida");
+            System.out.println("La identificacion no es valida");
         } else {
             this.identificacion = identificacion;
         }
@@ -58,7 +58,7 @@ public abstract class Persona implements Resumible {
     public void setNombreCompleto(String nombreCompleto) {
 
         if (nombreCompleto == null || nombreCompleto.trim().equals("")) {
-            System.out.println("El nombre no es válido");
+            System.out.println("El nombre no es valido");
         } else {
             this.nombreCompleto = nombreCompleto;
         }
@@ -71,7 +71,7 @@ public abstract class Persona implements Resumible {
     public void setTelefono(String telefono) {
 
         if (telefono == null || telefono.trim().equals("")) {
-            System.out.println("El teléfono no es válido");
+            System.out.println("El telefono no es válido");
         } else {
             this.telefono = telefono;
         }
@@ -92,7 +92,7 @@ public abstract class Persona implements Resumible {
     public void setCorreo(String correo) {
 
         if (correo == null || correo.trim().equals("")) {
-            System.out.println("El correo no es válido");
+            System.out.println("El correo no es valido");
         } else {
             this.correo = correo;
         }
