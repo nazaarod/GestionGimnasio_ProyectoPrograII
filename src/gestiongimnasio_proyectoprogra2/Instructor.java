@@ -1,13 +1,11 @@
 package gestiongimnasio_proyectoprogra2;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
-public class Instructor extends Persona {
-
+public class Instructor extends Persona 
+{ 
     private String especialidad;
-
+    //Constructor
     public Instructor(String identificacion, String nombreCompleto, String telefono,
             String edad, String correo, String especialidad) {
 
@@ -22,18 +20,18 @@ public class Instructor extends Persona {
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
     }
-
+    
+    //Overrride para utilizar el metodo con modificaciones
     @Override
-    public void mostrarResumen() {
-
-        
-        // 1. Crear la ventana con un titulo
+    public void mostrarResumen() 
+    {
+        //Creacion de la ventana
         JFrame ventana = new JFrame("Mostrar Resumen de Prueba");
         ventana.setSize(400, 200);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setLocationRelativeTo(null); 
 
-        
+        //Guardado de texto en la variable "texto"
         String texto = "<html><div style='text-align: center;'>"
                      + "<h1>Instructor</h1>"
                      + "Identificacion: "+identificacion+"<br>"
@@ -43,25 +41,14 @@ public class Instructor extends Persona {
                      + "correo: "+correo+"<br>"
                      + "</div></html>";
 
-        // 3. Crear la etiqueta que sostiene el texto y centrarlo
+        //Se proceden a enviar los cambios a la etiqueta y luego se muestra en la pantalla
         JLabel etiqueta = new JLabel(texto, SwingConstants.CENTER);
 
-        // 4. Meter el texto directo a la ventana
-       ventana.add(etiqueta);
+        //  Meter el texto directo a la ventana
+        ventana.add(etiqueta);
 
-        // 5. Hacerla visible
+        // Hacerla visible
         ventana.setVisible(true);
-        
-        
-        
-        
-        System.out.println("--INSTRUCTOR--");
-        System.out.println("Identificacion: " + identificacion);
-        System.out.println("Instructor: " + nombreCompleto);
-        System.out.println("Telefono: " + telefono);
-        System.out.println("Edad: " + edad);
-        System.out.println("Correo: " + correo);
-        System.out.println("------------------------------------------------");
     }
 
     @Override

@@ -1,7 +1,8 @@
 package gestiongimnasio_proyectoprogra2;
 
-public abstract class Persona implements Resumible {
-
+//Se utiliza abstract para que no se pueda instanciar la clase, solo implementarla.
+public abstract class Persona implements Resumible 
+{
     protected String identificacion;
     protected String nombreCompleto;
     protected String telefono;
@@ -17,8 +18,10 @@ public abstract class Persona implements Resumible {
         this.correo = "";
         this.estado = false;
     }
-
-    public Persona(String identificacion, String nombreCompleto, String telefono, String edad, String correo) {
+        
+    //Constructor manual de la clase.
+    public Persona(String identificacion, String nombreCompleto, String telefono, String edad, String correo) 
+    {
 
         if (identificacion == null || identificacion.trim().equals("")) {
             this.identificacion = "";
@@ -106,6 +109,3 @@ public abstract class Persona implements Resumible {
         this.estado = estado;
     }
 }
-
-
-    

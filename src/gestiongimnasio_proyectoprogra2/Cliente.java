@@ -7,10 +7,11 @@ public class Cliente extends Persona {
     public Cliente() {
         super();
         this.fechaInscripcion = "Sin fecha";
-
+        
     }
-
-    public Cliente(String identificacion, String nombreCompleto, String telefono, String edad, String correo, String fechaInscripcion) {
+    //Constructor
+    public Cliente(String identificacion, String nombreCompleto, String telefono, String edad, String correo, String fechaInscripcion) 
+    {
         super(identificacion, nombreCompleto, telefono, edad, correo);
         this.fechaInscripcion = fechaInscripcion;
 
@@ -28,9 +29,10 @@ public class Cliente extends Persona {
         }
     }
 
+    //Un mostrar resumen temporal por consola, igual se utiliza el override para re utilizar el metodo
     @Override
-    public void mostrarResumen() {
-
+    public void mostrarResumen() 
+    {
         System.out.println("--CLIENTE--");
         System.out.println("Cliente: " + nombreCompleto);
         System.out.println("Identificacion: " + identificacion);
