@@ -9,11 +9,8 @@ public class Principal {
 
         instructor1.mostrarResumen();
         System.out.println(instructor1.toString());
-        instructor1.inactivar();
 
         cliente1.mostrarResumen();
         System.out.println(cliente1.toString());
-        cliente1.inactivar();
-        
     }
 }
