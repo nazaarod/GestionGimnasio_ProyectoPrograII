@@ -14,6 +14,6 @@ public class Principal {
         cliente1.mostrarResumen();
         System.out.println(cliente1.toString());
         cliente1.inactivar();
-
+        
     }
 }
