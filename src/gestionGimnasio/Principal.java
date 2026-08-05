@@ -14,6 +14,6 @@ public class Principal {
         System.out.println(instructor1.toString());
 
         cliente1.mostrarResumen();
-        System.out.println(cliente1.toString());
+        System.out.println(cliente1.toString()); //
     }
 }
