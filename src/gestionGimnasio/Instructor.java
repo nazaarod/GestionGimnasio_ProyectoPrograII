@@ -1,4 +1,4 @@
-package gestiongimnasio_proyectoprogra2;
+package gestionGimnasio;
 
 import javax.swing.*;
 
@@ -6,18 +6,20 @@ public class Instructor extends Persona
 { 
     private String especialidad;
     //Constructor
-    public Instructor(String identificacion, String nombreCompleto, String telefono,
-            String edad, String correo, String especialidad) {
+    public Instructor(String identificacion, String nombreCompleto, String telefono, String edad, String correo, String especialidad, String estado) 
+    {
 
-        super(identificacion, nombreCompleto, telefono, edad, correo);
+        super(identificacion, nombreCompleto, telefono, edad, correo, estado);
         this.especialidad = especialidad;
     }
 
-    public String getEspecialidad() {
+    public String getEspecialidad() 
+    {
         return especialidad;
     }
 
-    public void setEspecialidad(String especialidad) {
+    public void setEspecialidad(String especialidad) 
+    {
         this.especialidad = especialidad;
     }
     

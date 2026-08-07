@@ -1,4 +1,4 @@
-package gestiongimnasio_proyectoprogra2;
+package gestionGimnasio;
 
 public class Cliente extends Persona {
 

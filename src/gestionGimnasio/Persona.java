@@ -1,4 +1,4 @@
-package gestiongimnasio_proyectoprogra2;
+package gestionGimnasio;
 
 //Se utiliza abstract para que no se pueda instanciar la clase, solo implementarla.
 public abstract class Persona implements Resumible 
@@ -8,7 +8,7 @@ public abstract class Persona implements Resumible
     protected String telefono;
     protected String edad;
     protected String correo;
-    protected boolean estado;
+    protected String estado;
 
     public Persona() {
         this.identificacion = "";
@@ -16,10 +16,30 @@ public abstract class Persona implements Resumible
         this.telefono = "";
         this.edad = "";
         this.correo = "";
-        this.estado = false;
+        this.estado = "Inactivo";
     }
         
     //Constructor manual de la clase.
+    public Persona(String identificacion, String nombreCompleto, String telefono, String edad, String correo, String estado) 
+    {
+
+        if (identificacion == null || identificacion.trim().equals("")) {
+            this.identificacion = "";
+        } else {
+            this.identificacion = identificacion;
+        }
+
+        if (nombreCompleto == null || nombreCompleto.trim().equals("")) {
+            this.nombreCompleto = "Sin nombre";
+        } else {
+            this.nombreCompleto = nombreCompleto;
+        }
+
+        this.telefono = telefono;
+        this.edad = edad;
+        this.correo = correo;
+        this.estado = estado;
+    }
     public Persona(String identificacion, String nombreCompleto, String telefono, String edad, String correo) 
     {
 
@@ -38,7 +58,7 @@ public abstract class Persona implements Resumible
         this.telefono = telefono;
         this.edad = edad;
         this.correo = correo;
-        this.estado = true;
+        this.estado = "Inactivo";
     }
 
     public String getIdentificacion() {
@@ -101,11 +121,13 @@ public abstract class Persona implements Resumible
         }
     }
 
-    public boolean getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    
 }
