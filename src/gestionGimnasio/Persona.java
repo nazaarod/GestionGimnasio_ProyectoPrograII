@@ -6,7 +6,6 @@ public abstract class Persona implements Resumible
     protected String identificacion;
     protected String nombreCompleto;
     protected String telefono;
-    protected String edad;
     protected String correo;
     protected String estado;
 
@@ -14,13 +13,12 @@ public abstract class Persona implements Resumible
         this.identificacion = "";
         this.nombreCompleto = "Sin nombre";
         this.telefono = "";
-        this.edad = "";
         this.correo = "";
         this.estado = "Inactivo";
     }
         
     //Constructor manual de la clase.
-    public Persona(String identificacion, String nombreCompleto, String telefono, String edad, String correo, String estado) 
+    public Persona(String identificacion, String nombreCompleto, String telefono, String correo, String estado) 
     {
 
         if (identificacion == null || identificacion.trim().equals("")) {
@@ -36,11 +34,10 @@ public abstract class Persona implements Resumible
         }
 
         this.telefono = telefono;
-        this.edad = edad;
         this.correo = correo;
         this.estado = estado;
     }
-    public Persona(String identificacion, String nombreCompleto, String telefono, String edad, String correo) 
+    public Persona(String identificacion, String nombreCompleto, String telefono, String correo) 
     {
 
         if (identificacion == null || identificacion.trim().equals("")) {
@@ -56,7 +53,6 @@ public abstract class Persona implements Resumible
         }
 
         this.telefono = telefono;
-        this.edad = edad;
         this.correo = correo;
         this.estado = "Inactivo";
     }
@@ -98,14 +94,6 @@ public abstract class Persona implements Resumible
         } else {
             this.telefono = telefono;
         }
-    }
-
-    public String getEdad() {
-        return edad;
-    }
-
-    public void setEdad(String edad) {
-        this.edad = edad;
     }
 
     public String getCorreo() {

@@ -6,10 +6,10 @@ public class Instructor extends Persona
 { 
     private String especialidad;
     //Constructor
-    public Instructor(String identificacion, String nombreCompleto, String telefono, String edad, String correo, String especialidad, String estado) 
+    public Instructor(String identificacion, String nombreCompleto, String telefono, String correo, String especialidad, String estado) 
     {
 
-        super(identificacion, nombreCompleto, telefono, edad, correo, estado);
+        super(identificacion, nombreCompleto, telefono, correo, estado);
         this.especialidad = especialidad;
     }
 
@@ -39,7 +39,6 @@ public class Instructor extends Persona
                      + "Identificacion: "+identificacion+"<br>"
                      + "Nombre Completo: "+nombreCompleto+"<br>"
                      + "Telefono: "+telefono+"<br>"
-                     + "Edad: "+edad+"<br>"
                      + "correo: "+correo+"<br>"
                      + "</div></html>";
 

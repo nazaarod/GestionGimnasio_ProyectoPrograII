@@ -72,21 +72,7 @@
               </Group>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblEdad" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtEdad" min="-2" pref="152" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtIdentificacion" min="-2" pref="103" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                              <Component id="lblIdentificacion" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                      <EmptySpace min="90" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblEspecialidad" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -94,12 +80,18 @@
                               <Component id="lblTelefono" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtTelefono" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
-                          <Component id="txtEspecialidad" min="-2" pref="152" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblIdentificacion" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="txtTelefono" alignment="0" pref="152" max="32767" attributes="0"/>
+                  <Component id="txtEspecialidad" pref="152" max="32767" attributes="0"/>
+                  <Component id="txtIdentificacion" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
           </Group>
@@ -128,15 +120,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                              <Component id="lblIdentificacion" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtIdentificacion" min="-2" pref="27" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblIdentificacion" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="txtIdentificacion" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -145,13 +133,9 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblEdad" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtEdad" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtTelefono" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="txtTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
@@ -230,16 +214,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTelefonoActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblEdad">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Edad"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtEdad">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEdadActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
