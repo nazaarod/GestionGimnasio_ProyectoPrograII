@@ -1,0 +1,555 @@
+package gestionGimnasio.GUI;
+
+import gestionGimnasio.Instructor;
+import gestionGimnasio.DatosRep;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
+public class FrmInstructores extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmInstructores.class.getName());
+    
+    private int filaSeleccionada = -1;
+    
+    
+    public FrmInstructores() {
+        initComponents();
+        
+        setLocationRelativeTo(null);
+        configurarTabla();
+        cargarEstados();
+        cargarTabla(); 
+    }
+    
+
+    
+    private void configurarTabla() 
+    {
+        DefaultTableModel modelo = new DefaultTableModel
+        (
+            new Object[]
+            {
+                "Identificacion",
+                "Nombre",
+                "Correo",
+                "Estado",
+                "Telefono",
+                "Especialidad"
+            }, 0                 
+        ) 
+        {
+            @Override
+            public boolean isCellEditable (int fila, int columna) 
+            {
+                return false;
+            }
+        };
+
+        tblInstructores.setModel(modelo);
+        tblInstructores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    
+    private void cargarTabla()
+    {
+        DefaultTableModel modelo = (DefaultTableModel) tblInstructores.getModel();
+        modelo.setRowCount(0);
+        
+        for (Instructor instructor : DatosRep.INSTRUCTORES.obtenerTodos()) 
+        {
+            modelo.addRow(new Object[]
+                {
+                    instructor.getIdentificacion(),
+                    instructor.getNombreCompleto(),
+                    instructor.getCorreo(),
+                    instructor.getEstado(),
+                    instructor.getTelefono(),
+                    instructor.getEspecialidad()
+                }
+            );
+        }
+    }
+    private void cargarEstados() {
+        cmbEstado.removeAllItems();
+        cmbEstado.addItem("Activo");
+        cmbEstado.addItem("Inactivo");
+    }
+    
+   private boolean validarCampos() {
+        if (txtIdentificacion.getText().trim().isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Debe ingresar la Identificacion");
+            txtIdentificacion.requestFocus();
+            return false;
+        }
+        
+        if (txtNombre.getText().trim().isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Debe ingresar el nombre");
+            txtNombre.requestFocus();
+            return false;
+        }
+        
+        if (txtCorreo.getText().trim().isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Debe ingresar el correo");
+            txtCorreo.requestFocus();
+            return false;
+        }
+        
+        if (cmbEstado.getSelectedIndex() < 0) {
+            JOptionPane.showConfirmDialog(this, "Seleccione el estado.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
+            
+            cmbEstado.requestFocus();
+            return false;
+        }
+        if (txtTelefono.getText().trim().isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Debe ingresar el telefono");
+            txtTelefono.requestFocus();
+            return false;
+        }
+        
+        if (txtEspecialidad.getText().trim().isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Debe ingresar la Especialidad");
+            txtEspecialidad.requestFocus();
+            return false;
+        }
+       
+        
+        return true;
+    }
+   
+   private void limpiarFormulario() {
+        
+        txtNombre.setText("");
+        txtCorreo.setText("");
+        if (cmbEstado.getItemCount() > 0) {cmbEstado.setSelectedIndex(0);}
+        txtTelefono.setText("");
+        txtEspecialidad.setText("");
+
+        
+        tblInstructores.clearSelection();
+        
+        filaSeleccionada = -1;
+        
+        txtIdentificacion.requestFocus();
+    }
+   ////
+   private Instructor crearInstructorDesdeFormulario()
+   {
+       //String identificacion, String nombreCompleto, String telefono, String correo, String especialidad, String estado
+       return new Instructor
+       (
+               txtIdentificacion.getText().trim(),
+               txtNombre.getText().trim(),
+               txtTelefono.getText().trim(),
+               txtCorreo.getText().trim(),
+               txtEspecialidad.getText().trim(),
+               cmbEstado.getSelectedItem().toString()
+       );
+   }
+   
+   private void cargarInstructorSeleccionado() {
+        filaSeleccionada = tblInstructores.getSelectedRow();
+        if (filaSeleccionada < 0) {
+            return;
+        }
+
+        Instructor instructor = DatosRep.INSTRUCTORES.obtener(filaSeleccionada);
+        if (instructor == null) {
+            return;
+        }
+
+        txtIdentificacion.setText(instructor.getIdentificacion());
+        txtNombre.setText(instructor.getNombreCompleto());
+        txtCorreo.setText(instructor.getCorreo());
+        cmbEstado.setSelectedItem(instructor.getEstado());
+        txtTelefono.setText(instructor.getTelefono());
+        txtEspecialidad.setText(instructor.getEspecialidad());
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lblTitulo = new javax.swing.JLabel();
+        lblCedula = new javax.swing.JLabel();
+        txtCorreo = new javax.swing.JTextField();
+        lblCorreo = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblInstructores = new javax.swing.JTable();
+        btnNuevo = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        txtNombre = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
+        lblEspecialidad = new javax.swing.JLabel();
+        txtEspecialidad = new javax.swing.JTextField();
+        lblIdentificacion = new javax.swing.JLabel();
+        txtIdentificacion = new javax.swing.JTextField();
+        cmbEstado = new javax.swing.JComboBox<>();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(850, 650));
+
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lblTitulo.setText("Administracion de Entrenadores");
+
+        lblCedula.setText("Estado");
+        lblCedula.setToolTipText("");
+
+        txtCorreo.setMinimumSize(new java.awt.Dimension(75, 27));
+        txtCorreo.setPreferredSize(new java.awt.Dimension(75, 27));
+        txtCorreo.addActionListener(this::txtCorreoActionPerformed);
+
+        lblCorreo.setText("Correo");
+
+        lblTelefono.setText("Telefono:");
+
+        txtTelefono.setMinimumSize(new java.awt.Dimension(75, 27));
+        txtTelefono.setPreferredSize(new java.awt.Dimension(75, 27));
+        txtTelefono.addActionListener(this::txtTelefonoActionPerformed);
+
+        tblInstructores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblInstructores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblInstructoresMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblInstructores);
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(this::btnNuevoActionPerformed);
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
+
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+
+        txtNombre.setMinimumSize(new java.awt.Dimension(75, 27));
+        txtNombre.setPreferredSize(new java.awt.Dimension(75, 27));
+        txtNombre.addActionListener(this::txtNombreActionPerformed);
+
+        lblNombre.setText("Nombre:");
+
+        lblEspecialidad.setText("Especialidad");
+
+        txtEspecialidad.addActionListener(this::txtEspecialidadActionPerformed);
+
+        lblIdentificacion.setText("Identificacion");
+        lblIdentificacion.setToolTipText("");
+
+        txtIdentificacion.setMinimumSize(new java.awt.Dimension(75, 27));
+        txtIdentificacion.setPreferredSize(new java.awt.Dimension(75, 27));
+        txtIdentificacion.addActionListener(this::txtIdentificacionActionPerformed);
+
+        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEstado.addActionListener(this::cmbEstadoActionPerformed);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addGap(349, 349, 349))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNombre)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblCedula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                    .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblIdentificacion)
+                                .addGap(7, 7, 7))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblTelefono)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblEspecialidad)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtEspecialidad)
+                            .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(166, 166, 166))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(lblTitulo)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                                        .addGap(59, 59, 59))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(59, 59, 59)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblTelefono))
+                                        .addGap(35, 35, 35)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblEspecialidad))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombre)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCorreo)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 370, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnCerrar)
+                    .addComponent(btnEliminar))
+                .addGap(54, 54, 54))
+        );
+
+        lblCedula.getAccessibleContext().setAccessibleName("Cedula");
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoActionPerformed
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void tblInstructoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInstructoresMouseClicked
+        cargarInstructorSeleccionado();
+    }//GEN-LAST:event_tblInstructoresMouseClicked
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(!validarCampos()){
+            return;
+        }
+        
+        Instructor instructor = crearInstructorDesdeFormulario();
+        
+        DatosRep.INSTRUCTORES.agregar(instructor);
+        
+        cargarTabla();
+        limpiarFormulario();
+        
+        JOptionPane.showMessageDialog(this, "Instructor registrado correctamente");
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        if (filaSeleccionada < 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione un instructor dentro de la tabla"
+            );
+            return;
+        }
+        if (!validarCampos()) {
+            return;
+        }
+        Instructor instructorAct = crearInstructorDesdeFormulario();
+        boolean actualizado = DatosRep.INSTRUCTORES.actualizar(
+                filaSeleccionada,
+                instructorAct
+        );
+        if (actualizado) {
+            cargarTabla();
+            limpiarFormulario();
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Instructor actualizado correctamente"
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se pudo actualizar el Instructor"
+            );
+        }                             
+    }//GEN-LAST:event_btnActualizarActionPerformed
+            
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (filaSeleccionada < 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione un Instructor dentro de la tabla"
+            );
+            return;
+        }
+        Instructor instructor = DatosRep.INSTRUCTORES.obtener(filaSeleccionada);
+        if (instructor == null) {
+            return;
+        }
+        int respuesta = JOptionPane.showConfirmDialog(
+                this,
+                "Desea eliminar el instructor " + instructor.getNombreCompleto() + "?",
+                "Confirmar eliminacion",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (respuesta != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        boolean eliminado = DatosRep.INSTRUCTORES.eliminar(filaSeleccionada);
+        if (eliminado) {
+            cargarTabla();
+            limpiarFormulario();
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Instructor eliminado correctamente"
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se pudo eliminar el Instructor"
+            );
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEspecialidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEspecialidadActionPerformed
+
+    private void txtIdentificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdentificacionActionPerformed
+
+    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEstadoActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new FrmInstructores().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox<String> cmbEstado;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCedula;
+    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblEspecialidad;
+    private javax.swing.JLabel lblIdentificacion;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTable tblInstructores;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtEspecialidad;
+    private javax.swing.JTextField txtIdentificacion;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTelefono;
+    // End of variables declaration//GEN-END:variables
+}
