@@ -131,7 +131,7 @@ public class FrmInstructores extends javax.swing.JFrame {
         
         txtIdentificacion.requestFocus();
     }
-   
+   //
    private Instructor crearInstructorDesdeFormulario()
    {
        //String identificacion, String nombreCompleto, String telefono, String correo, String especialidad, String estado
