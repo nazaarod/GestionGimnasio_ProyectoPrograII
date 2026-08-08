@@ -4,10 +4,8 @@
  */
 package gestionGimnasio.GUI;
 
-/**
- *
- * @author fabri
- */
+import javax.swing.JOptionPane;
+
 public class FrmUsuarios extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmUsuarios.class.getName());
@@ -208,108 +206,108 @@ public class FrmUsuarios extends javax.swing.JFrame {
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
 
-        if (filaSeleccionada < 0) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Seleccione una disciplina en la tabla.",
-                "Disciplina no seleccionada",
-                JOptionPane.WARNING_MESSAGE
-            );
-
-            return;
-
-        }
-
-        if (!validarCampos()) {
-            return;
-        }
-
-        DisciplinaDeportiva disciplinaDeportivaActualizada = crearDisciplinaDesdeFormulario();
-
-        boolean actualizado = DatosRep.DISCIPLINAS.actualizar(
-            filaSeleccionada,
-            disciplinaDeportivaActualizada
-        );
-
-        if (actualizado) {
-            cargarTabla();
-            limpiarFormulario();
-            JOptionPane.showMessageDialog(
-                this,
-                "Disciplina actualizada correctamente.",
-                "Actualización realizada",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-
-        } else {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "No se pudo actualizar la disciplina.",
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
-
-        }
+//        if (filaSeleccionada < 0) {
+//            JOptionPane.showMessageDialog(
+//                this,
+//                "Seleccione una disciplina en la tabla.",
+//                "Disciplina no seleccionada",
+//                JOptionPane.WARNING_MESSAGE
+//            );
+//
+//            return;
+//
+//        }
+//
+//        if (!validarCampos()) {
+//            return;
+//        }
+//
+//        DisciplinaDeportiva disciplinaDeportivaActualizada = crearDisciplinaDesdeFormulario();
+//
+//        boolean actualizado = DatosRep.DISCIPLINAS.actualizar(
+//            filaSeleccionada,
+//            disciplinaDeportivaActualizada
+//        );
+//
+//        if (actualizado) {
+//            cargarTabla();
+//            limpiarFormulario();
+//            JOptionPane.showMessageDialog(
+//                this,
+//                "Disciplina actualizada correctamente.",
+//                "Actualización realizada",
+//                JOptionPane.INFORMATION_MESSAGE
+//            );
+//
+//        } else {
+//
+//            JOptionPane.showMessageDialog(
+//                this,
+//                "No se pudo actualizar la disciplina.",
+//                "Error",
+//                JOptionPane.ERROR_MESSAGE
+//            );
+//
+//        }
     }//GEN-LAST:event_btnActualizarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        if (filaSeleccionada < 0) {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "Seleccione una disciplina en la tabla.",
-                "Disciplina no seleccionada",
-                JOptionPane.WARNING_MESSAGE
-            );
-
-            return;
-        }
-
-        DisciplinaDeportiva disciplinaDeportiva = DatosRep.DISCIPLINAS.obtener(filaSeleccionada);
-
-        if (disciplinaDeportiva == null) {
-            return;
-        }
-
-        int respuesta = JOptionPane.showConfirmDialog(
-            this,
-            "¿Desea eliminar la disciplina "
-            + disciplinaDeportiva.getNombre() + " - " + disciplinaDeportiva.getCategoria()
-            + "?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE
-        );
-
-        if (respuesta != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        boolean eliminado = DatosRep.DISCIPLINAS.eliminar(filaSeleccionada);
-
-        if (eliminado) {
-
-            cargarTabla();
-            limpiarFormulario();
-
-            JOptionPane.showMessageDialog(
-                this,
-                "Disciplina eliminada correctamente.",
-                "Eliminación realizada",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-
-        } else {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "No se pudo eliminar la disciplina.",
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
-
-        }
+//        if (filaSeleccionada < 0) {
+//
+//            JOptionPane.showMessageDialog(
+//                this,
+//                "Seleccione una disciplina en la tabla.",
+//                "Disciplina no seleccionada",
+//                JOptionPane.WARNING_MESSAGE
+//            );
+//
+//            return;
+//        }
+//
+//        DisciplinaDeportiva disciplinaDeportiva = DatosRep.DISCIPLINAS.obtener(filaSeleccionada);
+//
+//        if (disciplinaDeportiva == null) {
+//            return;
+//        }
+//
+//        int respuesta = JOptionPane.showConfirmDialog(
+//            this,
+//            "¿Desea eliminar la disciplina "
+//            + disciplinaDeportiva.getNombre() + " - " + disciplinaDeportiva.getCategoria()
+//            + "?",
+//            "Confirmar eliminación",
+//            JOptionPane.YES_NO_OPTION,
+//            JOptionPane.QUESTION_MESSAGE
+//        );
+//
+//        if (respuesta != JOptionPane.YES_OPTION) {
+//            return;
+//        }
+//
+//        boolean eliminado = DatosRep.DISCIPLINAS.eliminar(filaSeleccionada);
+//
+//        if (eliminado) {
+//
+//            cargarTabla();
+//            limpiarFormulario();
+//
+//            JOptionPane.showMessageDialog(
+//                this,
+//                "Disciplina eliminada correctamente.",
+//                "Eliminación realizada",
+//                JOptionPane.INFORMATION_MESSAGE
+//            );
+//
+//        } else {
+//
+//            JOptionPane.showMessageDialog(
+//                this,
+//                "No se pudo eliminar la disciplina.",
+//                "Error",
+//                JOptionPane.ERROR_MESSAGE
+//            );
+//
+//        }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
@@ -317,27 +315,27 @@ public class FrmUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarMouseClicked
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        limpiarFormulario();
+//        limpiarFormulario();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
 
-        if (!validarCampos()) {
-            return;
-        }
-
-        DisciplinaDeportiva disciplinaDeportiva = crearDisciplinaDesdeFormulario();
-        DatosRep.DISCIPLINAS.agregar(disciplinaDeportiva);
-
-        cargarTabla();
-        limpiarFormulario();
-
-        JOptionPane.showMessageDialog(
-            this,
-            "Disciplina registrada correctamente.",
-            "Registro realizado",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+//        if (!validarCampos()) {
+//            return;
+//        }
+//
+//        DisciplinaDeportiva disciplinaDeportiva = crearDisciplinaDesdeFormulario();
+//        DatosRep.DISCIPLINAS.agregar(disciplinaDeportiva);
+//
+//        cargarTabla();
+//        limpiarFormulario();
+//
+//        JOptionPane.showMessageDialog(
+//            this,
+//            "Disciplina registrada correctamente.",
+//            "Registro realizado",
+//            JOptionPane.INFORMATION_MESSAGE
+//        );
 
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -346,7 +344,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblInscripcionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInscripcionesMouseClicked
-        cargarInscripcionSeleccionada();
+//        cargarInscripcionSeleccionada();
     }//GEN-LAST:event_tblInscripcionesMouseClicked
 
     /**
