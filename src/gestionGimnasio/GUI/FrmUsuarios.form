@@ -51,22 +51,22 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblEstado" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
-                                  <Component id="lblIdInscripcion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNombreUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtIDInscripcion" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtNombreUsuario" alignment="0" max="32767" attributes="0"/>
                                   <Component id="cmbEstado" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblDeportista" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <Component id="lblFecha" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <Component id="lblRol" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="lblContrasena" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtFecha" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cmbDeportista" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
+                                  <Component id="txtContrasena" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cmbRol" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -88,16 +88,16 @@
               <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblIdInscripcion" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtIDInscripcion" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblDeportista" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmbDeportista" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNombreUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNombreUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblRol" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmbRol" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtFecha" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="lblEstado" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -120,14 +120,14 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lblFecha">
+    <Component class="javax.swing.JLabel" name="lblContrasena">
       <Properties>
-        <Property name="text" type="java.lang.String" value="fecha"/>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblDeportista">
+    <Component class="javax.swing.JLabel" name="lblRol">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Deportista"/>
+        <Property name="text" type="java.lang.String" value="Rol"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTitulo">
@@ -138,14 +138,14 @@
         <Property name="text" type="java.lang.String" value="Administracion de Usuarios"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblIdInscripcion">
+    <Component class="javax.swing.JLabel" name="lblNombreUsuario">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Id de Inscripcion: "/>
+        <Property name="text" type="java.lang.String" value="Nombre de Usuario"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtIDInscripcion">
+    <Component class="javax.swing.JTextField" name="txtNombreUsuario">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIDInscripcionActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreUsuarioActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEstado">
@@ -168,12 +168,12 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFecha">
+    <Component class="javax.swing.JTextField" name="txtContrasena">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFechaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtContrasenaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmbDeportista">
+    <Component class="javax.swing.JComboBox" name="cmbRol">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
@@ -236,7 +236,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tblInscripciones">
+        <Component class="javax.swing.JTable" name="tblUsuarios">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">
@@ -248,7 +248,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblInscripcionesMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblUsuariosMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>
