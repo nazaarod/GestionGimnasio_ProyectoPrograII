@@ -4,6 +4,8 @@
  */
 package gestionGimnasio.GUI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jeank
@@ -156,18 +158,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInstructoresActionPerformed
 
     private void btnEjerciciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjerciciosActionPerformed
-        FrmEjercicios ejercicios = new FrmEjercicios();
-        ejercicios.setVisible(true);
+//        FrmEjercicios ejercicios = new FrmEjercicios();
+//        ejercicios.setVisible(true);
     }//GEN-LAST:event_btnEjerciciosActionPerformed
 
     private void btnRutinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutinasActionPerformed
-        FrmRutinas rutinas = new FrmRutinas();
-        rutinas.setVisible(true);
+//        FrmRutinas rutinas = new FrmRutinas();
+//        rutinas.setVisible(true);
     }//GEN-LAST:event_btnRutinasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        FrmClientes clientes = new FrmClientes();
-        clientes.setVisible(true);
+//        FrmClientes clientes = new FrmClientes();
+//        clientes.setVisible(true);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
