@@ -18,13 +18,13 @@ public class Pago implements Resumible {
 
         this.metodoPago = "";
         this.monto = 0.0;
+        this.fechaPago = LocalDate.now();
 
     }
 
     public Pago(Cliente cliente, LocalDate fechaPago, double monto, String metodoPago, Usuario usuarioRegistra) {
-
         this.cliente = cliente;
-        this.fechaPago = fechaPago;
+        this.fechaPago = LocalDate.now();
         this.monto = monto;
         this.metodoPago = metodoPago;
         this.usuarioRegistra = usuarioRegistra;
