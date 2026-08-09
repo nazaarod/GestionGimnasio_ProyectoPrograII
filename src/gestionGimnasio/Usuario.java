@@ -23,6 +23,8 @@ public class Usuario extends Persona
     public Usuario(String nombreUsuario, String contrasena) {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
+        this.rol = "Operario";
+        this.estadoUss = "Activo";
     }
 
     public String getNombreUsuario() {
