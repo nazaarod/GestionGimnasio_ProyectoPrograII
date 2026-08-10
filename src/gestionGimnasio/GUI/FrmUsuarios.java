@@ -1,20 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package gestionGimnasio.GUI;
 
 import javax.swing.JOptionPane;
 
+import gestionGimnasio.DatosRep;
+import gestionGimnasio.Usuario;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
 public class FrmUsuarios extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmUsuarios.class.getName());
+    private int filaSeleccionada = -1;
+    
+    
 
-    /**
-     * Creates new form CrearUsuario
-     */
-    public FrmUsuarios() {
+
+    public FrmUsuarios() 
+    {
         initComponents();
+        
+        configurarTabla();
+        limpiarFormulario();
+        cargarEstados();
+        cargarRol();
+        cargarTabla();
+
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -26,45 +38,44 @@ public class FrmUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblFecha = new javax.swing.JLabel();
-        lblDeportista = new javax.swing.JLabel();
+        lblContrasena = new javax.swing.JLabel();
+        lblRol = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
-        lblIdInscripcion = new javax.swing.JLabel();
-        txtIDInscripcion = new javax.swing.JTextField();
+        lblNombreUsuario = new javax.swing.JLabel();
+        txtNombreUsuario = new javax.swing.JTextField();
         lblEstado = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
-        txtFecha = new javax.swing.JTextField();
-        cmbDeportista = new javax.swing.JComboBox<>();
+        txtContrasena = new javax.swing.JTextField();
+        cmbRol = new javax.swing.JComboBox<>();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblInscripciones = new javax.swing.JTable();
+        tblUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(973, 630));
         setSize(new java.awt.Dimension(850, 650));
 
-        lblFecha.setText("fecha");
+        lblContrasena.setText("Contraseña");
 
-        lblDeportista.setText("Deportista");
+        lblRol.setText("Rol");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblTitulo.setText("Administracion de Usuarios");
 
-        lblIdInscripcion.setText("Id de Inscripcion: ");
+        lblNombreUsuario.setText("Nombre de Usuario");
 
-        txtIDInscripcion.addActionListener(this::txtIDInscripcionActionPerformed);
+        txtNombreUsuario.addActionListener(this::txtNombreUsuarioActionPerformed);
 
         lblEstado.setText("Estado");
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        txtFecha.addActionListener(this::txtFechaActionPerformed);
+        txtContrasena.addActionListener(this::txtContrasenaActionPerformed);
 
-        cmbDeportista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnActualizar.setText("Actualizar");
         btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -98,7 +109,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         });
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
-        tblInscripciones.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -109,12 +120,12 @@ public class FrmUsuarios extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblInscripciones.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblInscripcionesMouseClicked(evt);
+                tblUsuariosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblInscripciones);
+        jScrollPane1.setViewportView(tblUsuarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,19 +154,19 @@ public class FrmUsuarios extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblIdInscripcion))
+                                    .addComponent(lblNombreUsuario))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtIDInscripcion)
+                                    .addComponent(txtNombreUsuario)
                                     .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(110, 110, 110)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDeportista, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtFecha)
-                                    .addComponent(cmbDeportista, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtContrasena)
+                                    .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
@@ -169,15 +180,15 @@ public class FrmUsuarios extends javax.swing.JFrame {
                 .addComponent(lblTitulo)
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdInscripcion)
-                    .addComponent(txtIDInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDeportista)
-                    .addComponent(cmbDeportista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombreUsuario)
+                    .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRol)
+                    .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblFecha)
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblContrasena)
+                        .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblEstado)
                         .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -196,118 +207,275 @@ public class FrmUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIDInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDInscripcionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDInscripcionActionPerformed
+    private void configurarTabla() {
 
-    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaActionPerformed
+        DefaultTableModel modelo = new DefaultTableModel(
+                new Object[]{
+                    "Nombre de Usuario",
+                    "Estado",
+                    "Rol",
+                    "Contraseña"
+                },
+                0
+        ) {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
 
+        tblUsuarios.setModel(modelo);
+        tblUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblUsuarios.getTableHeader().setReorderingAllowed(false);
+
+        tblUsuarios.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tblUsuarios.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblUsuarios.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tblUsuarios.getColumnModel().getColumn(3).setPreferredWidth(150);
+
+    }
+    
+    
+     private void limpiarFormulario() {
+
+        txtNombreUsuario.setText("");
+        txtContrasena.setText("");
+        if (cmbEstado.getItemCount() > 0) {
+            cmbEstado.setSelectedIndex(0);
+
+        }
+        if (cmbRol.getItemCount() > 0) {
+            cmbRol.setSelectedIndex(0);
+
+        }
+
+        
+
+        tblUsuarios.clearSelection();
+        filaSeleccionada = -1;
+    }
+    
+    private void cargarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+        modelo.setRowCount(0);
+        for (Usuario usuario : DatosRep.USUARIOS.obtenerTodos()) {
+            modelo.addRow(
+                    new Object[]{
+                        usuario.getNombreUsuario(),
+                        usuario.getEstado(),
+                        usuario.getRol(),
+                        usuario.getContrasena()
+
+                    }
+            );
+        }
+    }
+    
+    private void txtNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreUsuarioActionPerformed
+
+    private boolean validarCampos() {
+
+        if (txtNombreUsuario.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar el nombre de usuario.",
+                    "Dato requerido",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            txtNombreUsuario.requestFocus();
+            return false;
+        }
+
+        if (txtContrasena.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar la contrasena.",
+                    "Dato requerido",
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            txtContrasena.requestFocus();
+            return false;
+        }
+
+        if (cmbEstado.getSelectedIndex() < 0) {
+            JOptionPane.showConfirmDialog(this, "Seleccione un estado.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
+            
+            cmbEstado.requestFocus();
+            return false;
+        }
+        if (cmbRol.getSelectedIndex() < 0) {
+            JOptionPane.showConfirmDialog(this, "Seleccione un rol.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
+            
+            cmbRol.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+    
+    
+    private void cargarUsuarioSeleccionado() {
+        int filaVista = tblUsuarios.getSelectedRow();
+        if (filaVista < 0) {
+            return;
+        }
+
+        filaSeleccionada = tblUsuarios.convertRowIndexToModel(filaVista);
+
+        Usuario usuario = DatosRep.USUARIOS.obtener(filaSeleccionada);
+
+        if (usuario == null) {
+            return;
+        }
+        
+        
+        txtNombreUsuario.setText(usuario.getNombreUsuario());
+        txtContrasena.setText(usuario.getContrasena());
+        cmbEstado.setSelectedItem(usuario.getEstado());
+        cmbRol.setSelectedItem(usuario.getRol());
+    }
+    
+    private void cargarEstados() {
+        cmbEstado.removeAllItems();
+        cmbEstado.addItem("Activo");
+        cmbEstado.addItem("Inactivo");
+    }
+    
+    private void cargarRol() 
+    {
+        cmbRol.removeAllItems();
+        cmbRol.addItem("Admin");
+        cmbRol.addItem("Operario");
+    }
+    
+    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContrasenaActionPerformed
+
+    
+    private Usuario crearUsuarioDesdeFormulario()
+    {
+        
+        return new Usuario(
+                txtNombreUsuario.getText().trim(),
+                txtContrasena.getText().trim(),
+                cmbRol.getSelectedItem().toString(),
+                cmbEstado.getSelectedItem().toString()
+                
+                
+        );
+    }
+    
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
 
-//        if (filaSeleccionada < 0) {
-//            JOptionPane.showMessageDialog(
-//                this,
-//                "Seleccione una disciplina en la tabla.",
-//                "Disciplina no seleccionada",
-//                JOptionPane.WARNING_MESSAGE
-//            );
-//
-//            return;
-//
-//        }
-//
-//        if (!validarCampos()) {
-//            return;
-//        }
-//
-//        DisciplinaDeportiva disciplinaDeportivaActualizada = crearDisciplinaDesdeFormulario();
-//
-//        boolean actualizado = DatosRep.DISCIPLINAS.actualizar(
-//            filaSeleccionada,
-//            disciplinaDeportivaActualizada
-//        );
-//
-//        if (actualizado) {
-//            cargarTabla();
-//            limpiarFormulario();
-//            JOptionPane.showMessageDialog(
-//                this,
-//                "Disciplina actualizada correctamente.",
-//                "Actualización realizada",
-//                JOptionPane.INFORMATION_MESSAGE
-//            );
-//
-//        } else {
-//
-//            JOptionPane.showMessageDialog(
-//                this,
-//                "No se pudo actualizar la disciplina.",
-//                "Error",
-//                JOptionPane.ERROR_MESSAGE
-//            );
-//
-//        }
+        if (filaSeleccionada < 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Seleccione un Usuario en la tabla.",
+                "Usuario no seleccionado",
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            return;
+
+        }
+
+        if (!validarCampos()) {
+            return;
+        }
+
+        Usuario usuarioAct = crearUsuarioDesdeFormulario();
+
+        boolean actualizado = DatosRep.USUARIOS.actualizar(
+            filaSeleccionada,
+            usuarioAct
+        );
+
+        if (actualizado) {
+            cargarTabla();
+            usuarioAct.mostrarResumen();
+            limpiarFormulario();
+            JOptionPane.showMessageDialog(
+                this,
+                "Usuario actualizado correctamente.",
+                "Actualización realizada",
+                JOptionPane.INFORMATION_MESSAGE
+                
+            );
+
+        } else {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "No se pudo actualizar el usuario.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+
+        }
     }//GEN-LAST:event_btnActualizarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-//        if (filaSeleccionada < 0) {
-//
-//            JOptionPane.showMessageDialog(
-//                this,
-//                "Seleccione una disciplina en la tabla.",
-//                "Disciplina no seleccionada",
-//                JOptionPane.WARNING_MESSAGE
-//            );
-//
-//            return;
-//        }
-//
-//        DisciplinaDeportiva disciplinaDeportiva = DatosRep.DISCIPLINAS.obtener(filaSeleccionada);
-//
-//        if (disciplinaDeportiva == null) {
-//            return;
-//        }
-//
-//        int respuesta = JOptionPane.showConfirmDialog(
-//            this,
-//            "¿Desea eliminar la disciplina "
-//            + disciplinaDeportiva.getNombre() + " - " + disciplinaDeportiva.getCategoria()
-//            + "?",
-//            "Confirmar eliminación",
-//            JOptionPane.YES_NO_OPTION,
-//            JOptionPane.QUESTION_MESSAGE
-//        );
-//
-//        if (respuesta != JOptionPane.YES_OPTION) {
-//            return;
-//        }
-//
-//        boolean eliminado = DatosRep.DISCIPLINAS.eliminar(filaSeleccionada);
-//
-//        if (eliminado) {
-//
-//            cargarTabla();
-//            limpiarFormulario();
-//
-//            JOptionPane.showMessageDialog(
-//                this,
-//                "Disciplina eliminada correctamente.",
-//                "Eliminación realizada",
-//                JOptionPane.INFORMATION_MESSAGE
-//            );
-//
-//        } else {
-//
-//            JOptionPane.showMessageDialog(
-//                this,
-//                "No se pudo eliminar la disciplina.",
-//                "Error",
-//                JOptionPane.ERROR_MESSAGE
-//            );
-//
-//        }
+        if (filaSeleccionada < 0) {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Seleccione un usuario en la tabla.",
+                "Usuario no seleccionada",
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            return;
+        }
+
+        Usuario usuario = DatosRep.USUARIOS.obtener(filaSeleccionada);
+
+        if (usuario == null) {
+            return;
+        }
+
+        int respuesta = JOptionPane.showConfirmDialog(
+            this,
+            "Desea eliminar el usuario "
+            + usuario.getNombreUsuario() + " - " + usuario.getContrasena()
+            + "?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (respuesta != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        boolean eliminado = DatosRep.USUARIOS.eliminar(filaSeleccionada);
+
+        if (eliminado) {
+
+            cargarTabla();
+            limpiarFormulario();
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Usuario eliminada correctamente.",
+                "Eliminación realizada",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } else {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "No se pudo eliminar el usuario.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+
+        }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
@@ -315,27 +483,27 @@ public class FrmUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarMouseClicked
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-//        limpiarFormulario();
+        limpiarFormulario();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
 
-//        if (!validarCampos()) {
-//            return;
-//        }
-//
-//        DisciplinaDeportiva disciplinaDeportiva = crearDisciplinaDesdeFormulario();
-//        DatosRep.DISCIPLINAS.agregar(disciplinaDeportiva);
-//
-//        cargarTabla();
-//        limpiarFormulario();
-//
-//        JOptionPane.showMessageDialog(
-//            this,
-//            "Disciplina registrada correctamente.",
-//            "Registro realizado",
-//            JOptionPane.INFORMATION_MESSAGE
-//        );
+        if (!validarCampos()) {
+            return;
+        }
+
+        Usuario usuario = crearUsuarioDesdeFormulario();
+        DatosRep.USUARIOS.agregar(usuario);
+
+        cargarTabla();
+        limpiarFormulario();
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Usuario registrado correctamente.",
+            "Registro realizado",
+            JOptionPane.INFORMATION_MESSAGE
+        );
 
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -343,9 +511,9 @@ public class FrmUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void tblInscripcionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInscripcionesMouseClicked
-//        cargarInscripcionSeleccionada();
-    }//GEN-LAST:event_tblInscripcionesMouseClicked
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        cargarUsuarioSeleccionado();
+    }//GEN-LAST:event_tblUsuariosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -378,16 +546,16 @@ public class FrmUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JComboBox<String> cmbDeportista;
     private javax.swing.JComboBox<String> cmbEstado;
+    private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblDeportista;
+    private javax.swing.JLabel lblContrasena;
     private javax.swing.JLabel lblEstado;
-    private javax.swing.JLabel lblFecha;
-    private javax.swing.JLabel lblIdInscripcion;
+    private javax.swing.JLabel lblNombreUsuario;
+    private javax.swing.JLabel lblRol;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTable tblInscripciones;
-    private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtIDInscripcion;
+    private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTextField txtContrasena;
+    private javax.swing.JTextField txtNombreUsuario;
     // End of variables declaration//GEN-END:variables
 }

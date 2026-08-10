@@ -32,8 +32,10 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
-              <Component id="botonIngresar" pref="146" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+              <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="btnIngresar" pref="146" max="32767" attributes="0"/>
               <EmptySpace pref="59" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
@@ -64,7 +66,10 @@
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="lblTitulo" max="-2" attributes="0"/>
               <EmptySpace pref="333" max="32767" attributes="0"/>
-              <Component id="botonIngresar" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnIngresar" alignment="3" max="-2" attributes="0"/>
+                  <Component id="btnCrearCuenta" alignment="3" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -88,12 +93,12 @@
   <SubComponents>
     <Component class="javax.swing.JPasswordField" name="txtContrasena">
     </Component>
-    <Component class="javax.swing.JButton" name="botonIngresar">
+    <Component class="javax.swing.JButton" name="btnIngresar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ingresar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonIngresarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIngresarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTitulo">
@@ -102,7 +107,7 @@
           <Font name="Segoe UI" size="20" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Inicio de sesion Academia"/>
+        <Property name="text" type="java.lang.String" value="Inicio de sesion Gimnasio"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblUsuario">
@@ -116,6 +121,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCrearCuenta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Crear Cuenta"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearCuentaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -4,6 +4,7 @@ package gestionGimnasio.GUI;
 import javax.swing.JOptionPane;
 import gestionGimnasio.Utilidades;
 import gestionGimnasio.Usuario;
+import gestionGimnasio.DatosRep;
 public class FrmLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmLogin.class.getName());
@@ -11,13 +12,29 @@ public class FrmLogin extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    //
     public FrmLogin() 
     {
         initComponents();
         
         setLocationRelativeTo(null);
 
-        getRootPane().setDefaultButton(botonIngresar);
+        getRootPane().setDefaultButton(btnIngresar);
+         
+        
+        
+        //Usuario admin para entrar al sistema como administrador
+        Usuario u = new Usuario("admin","1234","Admin","Activo");
+        boolean uActivo=false;
+        for(Usuario uu: DatosRep.USUARIOS.obtenerTodos())
+        {
+            if(u.getNombreUsuario().equals(uu.getNombreUsuario()) && uu.getRol().equals("Admin"))
+            {
+                uActivo=true;
+            }
+        }
+        if(!uActivo) {DatosRep.USUARIOS.agregar(u);}
+        
     }
 
     /**
@@ -30,11 +47,12 @@ public class FrmLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         txtContrasena = new javax.swing.JPasswordField();
-        botonIngresar = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblContraseña = new javax.swing.JLabel();
+        btnCrearCuenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventana_Login");
@@ -42,24 +60,29 @@ public class FrmLogin extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(405, 500));
 
-        botonIngresar.setText("Ingresar");
-        botonIngresar.addActionListener(this::botonIngresarActionPerformed);
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(this::btnIngresarActionPerformed);
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Inicio de sesion Academia");
+        lblTitulo.setText("Inicio de sesion Gimnasio");
 
         lblUsuario.setText("Usuario:");
 
         lblContraseña.setText("Contraseña:");
+
+        btnCrearCuenta.setText("Crear Cuenta");
+        btnCrearCuenta.addActionListener(this::btnCrearCuentaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(botonIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addGap(63, 63, 63)
+                .addComponent(btnCrearCuenta)
+                .addGap(38, 38, 38)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                 .addContainerGap(59, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
@@ -83,7 +106,9 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
-                .addComponent(botonIngresar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIngresar)
+                    .addComponent(btnCrearCuenta))
                 .addGap(82, 82, 82))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -101,8 +126,33 @@ public class FrmLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    private boolean validarCampos()
+    {
+        if (txtUsuario.getText().trim().isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Debe ingresar la Identificacion");
+            txtUsuario.requestFocus();
+            return false;
+        } 
+        if (txtContrasena.getPassword().length == 0) {
+            JOptionPane.showConfirmDialog(this, "Debe ingresar la contraseña");
+            txtContrasena.requestFocus();
+            return false;
+        } 
+        
+        for (Usuario usuario : DatosRep.USUARIOS.obtenerTodos()) 
+        {
+           if(usuario.getNombreUsuario().equals(txtUsuario.getText().trim()))
+           {
+               JOptionPane.showMessageDialog(this, "Usuario en uso","Intente uno nuevo", JOptionPane.ERROR_MESSAGE);
+               return false;
+           }
+        }
+        return true;
+    }
    
-    private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
        
         String usuario = txtUsuario.getText().trim();
         String contrasena = new String(txtContrasena.getPassword());
@@ -110,8 +160,8 @@ public class FrmLogin extends javax.swing.JFrame {
         
         if(Utilidades.ValidarAcceso(u)) 
         {
-            //FrmPrincipal ventanaPrincipal = new FrmPrincipal();
-            //ventanaPrincipal.setVisible(true);
+            FrmPrincipal ventanaPrincipal = new FrmPrincipal(u);
+            ventanaPrincipal.setVisible(true);
             dispose();
         } else {
 
@@ -120,7 +170,35 @@ public class FrmLogin extends javax.swing.JFrame {
             txtContrasena.setText("");
             txtContrasena.requestFocus();
         }
-    }//GEN-LAST:event_botonIngresarActionPerformed
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    
+    private Usuario crearUsuarioDesdeFormulario()
+   {
+       //String identificacion, String nombreCompleto, String telefono, String correo, String especialidad, String estado
+       
+       
+        return new Usuario
+        (
+            txtUsuario.getText().trim(),
+            new String(txtContrasena.getPassword())
+         );
+       
+       
+   }
+    
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        if(!validarCampos()){
+            return;
+        }
+        
+        Usuario usuario = crearUsuarioDesdeFormulario();
+        
+        DatosRep.USUARIOS.agregar(usuario);
+        txtContrasena.setText("");
+        
+        JOptionPane.showMessageDialog(this, "Usuario registrado correctamente");
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
  
     
     
@@ -148,7 +226,8 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonIngresar;
+    private javax.swing.JButton btnCrearCuenta;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblUsuario;
