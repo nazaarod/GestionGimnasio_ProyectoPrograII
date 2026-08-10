@@ -1,28 +1,31 @@
 package gestionGimnasio;
 
+import java.time.LocalDate;
+
 public class Cliente extends Persona {
 
-    private String fechaInscripcion;
+    
+    private LocalDate fechaInscripcion;
 
     public Cliente() {
         super();
-        this.fechaInscripcion = "Sin fecha";
+        this.fechaInscripcion = LocalDate.now();
         
     }
     //Constructor
-    public Cliente(String identificacion, String nombreCompleto, String telefono, String edad, String correo, String fechaInscripcion) 
+    public Cliente(String identificacion, String nombreCompleto, String telefono, String edad, String correo, LocalDate fechaInscripcion) 
     {
         super(identificacion, nombreCompleto, telefono, edad, correo);
-        this.fechaInscripcion = fechaInscripcion;
+        this.fechaInscripcion = LocalDate.now();
 
     }
 
-    public String getFechaInscripcion() {
+    public LocalDate getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(String fechaInscripcion) {
-        if (fechaInscripcion == null || fechaInscripcion.trim().equals("")) {
+    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+        if (fechaInscripcion == null || fechaInscripcion.equals("")) {
             System.out.println("La fecha no es válida");
         } else {
             this.fechaInscripcion = fechaInscripcion;
