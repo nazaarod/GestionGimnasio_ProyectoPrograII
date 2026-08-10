@@ -51,11 +51,11 @@ public class Usuario extends Persona
         this.rol = rol;
     }
 
-    public String getEstadoUss() {
+    public String getEstado() {
         return estadoUss;
     }
 
-    public void setEstadoUss(String estadoUss) {
+    public void setEstado(String estadoUss) {
         this.estadoUss = estadoUss;
     }
     

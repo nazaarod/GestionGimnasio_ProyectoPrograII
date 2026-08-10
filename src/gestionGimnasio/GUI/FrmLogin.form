@@ -107,7 +107,7 @@
           <Font name="Segoe UI" size="20" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Inicio de sesion Academia"/>
+        <Property name="text" type="java.lang.String" value="Inicio de sesion Gimnasio"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblUsuario">

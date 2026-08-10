@@ -19,6 +19,21 @@ public class FrmLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         getRootPane().setDefaultButton(btnIngresar);
+         
+        
+        
+        //Usuario admin para entrar al sistema como administrador
+        Usuario u = new Usuario("admin","1234","Admin","Activo");
+        boolean uActivo=false;
+        for(Usuario uu: DatosRep.USUARIOS.obtenerTodos())
+        {
+            if(u.getNombreUsuario().equals(uu.getNombreUsuario()) && uu.getRol().equals("Admin"))
+            {
+                uActivo=true;
+            }
+        }
+        if(!uActivo) {DatosRep.USUARIOS.agregar(u);}
+        
     }
 
     /**
@@ -49,7 +64,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Inicio de sesion Academia");
+        lblTitulo.setText("Inicio de sesion Gimnasio");
 
         lblUsuario.setText("Usuario:");
 
@@ -124,6 +139,15 @@ public class FrmLogin extends javax.swing.JFrame {
             txtContrasena.requestFocus();
             return false;
         } 
+        
+        for (Usuario usuario : DatosRep.USUARIOS.obtenerTodos()) 
+        {
+           if(usuario.getNombreUsuario().equals(txtUsuario.getText().trim()))
+           {
+               JOptionPane.showMessageDialog(this, "Usuario en uso","Intente uno nuevo", JOptionPane.ERROR_MESSAGE);
+               return false;
+           }
+        }
         return true;
     }
    
@@ -135,8 +159,8 @@ public class FrmLogin extends javax.swing.JFrame {
         
         if(Utilidades.ValidarAcceso(u)) 
         {
-            //FrmPrincipal ventanaPrincipal = new FrmPrincipal();
-            //ventanaPrincipal.setVisible(true);
+            FrmPrincipal ventanaPrincipal = new FrmPrincipal(u);
+            ventanaPrincipal.setVisible(true);
             dispose();
         } else {
 
@@ -151,11 +175,15 @@ public class FrmLogin extends javax.swing.JFrame {
     private Usuario crearUsuarioDesdeFormulario()
    {
        //String identificacion, String nombreCompleto, String telefono, String correo, String especialidad, String estado
-       return new Usuario
-       (
-               txtUsuario.getText().trim(),
-               new String(txtContrasena.getPassword())
-       );
+       
+       
+        return new Usuario
+        (
+            txtUsuario.getText().trim(),
+            new String(txtContrasena.getPassword())
+         );
+       
+       
    }
     
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
@@ -166,11 +194,9 @@ public class FrmLogin extends javax.swing.JFrame {
         Usuario usuario = crearUsuarioDesdeFormulario();
         
         DatosRep.USUARIOS.agregar(usuario);
-        
-        txtUsuario.setText("");
         txtContrasena.setText("");
         
-        JOptionPane.showMessageDialog(this, "Instructor registrado correctamente");
+        JOptionPane.showMessageDialog(this, "Usuario registrado correctamente");
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
  
     

@@ -14,4 +14,16 @@ public class Utilidades
         }
         return false;
     }
+    
+    public static boolean ValidarPermiso(Usuario u)
+    {
+        for(Usuario uu: DatosRep.USUARIOS.obtenerTodos())
+        {
+            if(u.getNombreUsuario().equals(uu.getNombreUsuario()) && uu.getRol().equals("Admin"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
