@@ -1,4 +1,3 @@
-
 package gestionGimnasio;
 
 /**
@@ -51,11 +50,11 @@ public class Usuario extends Persona
         this.rol = rol;
     }
 
-    public String getEstado() {
+    public String getEstadoUss() {
         return estadoUss;
     }
 
-    public void setEstado(String estadoUss) {
+    public void setEstadoUss(String estadoUss) {
         this.estadoUss = estadoUss;
     }
     
@@ -86,3 +85,4 @@ public class Usuario extends Persona
     
     
 }
+
