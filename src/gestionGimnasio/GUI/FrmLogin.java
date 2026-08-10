@@ -12,6 +12,7 @@ public class FrmLogin extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    //
     public FrmLogin() 
     {
         initComponents();
