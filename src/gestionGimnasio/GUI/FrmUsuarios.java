@@ -441,7 +441,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         int respuesta = JOptionPane.showConfirmDialog(
             this,
             "Desea eliminar el usuario "
-            + usuario.getNombreUsuario() + " - " + usuario.getClass()
+            + usuario.getNombreUsuario() + " - " + usuario.getContrasena()
             + "?",
             "Confirmar eliminación",
             JOptionPane.YES_NO_OPTION,

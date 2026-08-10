@@ -1,4 +1,3 @@
-
 package gestionGimnasio;
 
 /**
@@ -86,3 +85,4 @@ public class Usuario extends Persona
     
     
 }
+

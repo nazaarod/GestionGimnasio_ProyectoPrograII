@@ -7,6 +7,8 @@ package gestionGimnasio.GUI;
 import gestionGimnasio.DatosRep;
 import gestionGimnasio.Membresia;
 import javax.swing.JOptionPane;
+import gestionGimnasio.Usuario;
+import gestionGimnasio.Utilidades;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,13 +18,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrmMembresias extends javax.swing.JFrame {
     private int filaSeleccionada = -1;
-    
+    Usuario usuarioActivo;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmMembresias.class.getName());
 
     /**
      * Creates new form FrmMembresias
      */
-    public FrmMembresias() {
+    public FrmMembresias(Usuario u) {
+        
+        usuarioActivo= u;
+        
         initComponents();
         setLocationRelativeTo(null);
         configurarTabla();
@@ -320,10 +325,20 @@ public class FrmMembresias extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        if(!Utilidades.ValidarPermiso(usuarioActivo))
+        {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos necesarios", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         limpiarFormulario();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(!Utilidades.ValidarPermiso(usuarioActivo))
+        {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos necesarios", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (!validarCampos()){
             return;
         }    
@@ -335,6 +350,11 @@ public class FrmMembresias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        if(!Utilidades.ValidarPermiso(usuarioActivo))
+        {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos necesarios", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (filaSeleccionada < 0){
             JOptionPane.showMessageDialog(
                     this,
@@ -368,43 +388,49 @@ public class FrmMembresias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (filaSeleccionada < 0){
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Es necesario elegir una membresia"
-            );        
+        if(!Utilidades.ValidarPermiso(usuarioActivo))
+        {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos necesarios", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
             return;
-        }    
-        Membresia membresia = DatosRep.MEMBRESIAS.obtener(filaSeleccionada);
-        if (membresia == null){
-            return;
-        }    
-        int respuesta = JOptionPane.showConfirmDialog(
-                this,
-                "¿Desea eliminar la membresia" + membresia.getNombrePlan() + "?",
-                "Confirmar eliminacion",
-                JOptionPane.YES_NO_OPTION
-        );        
-        
-        if (respuesta != JOptionPane.YES_OPTION){
-            return;
-        }    
-        
-        boolean eliminado = DatosRep.MEMBRESIAS.eliminar(filaSeleccionada);
-        if(eliminado) {
-            cargarTabla();
-            limpiarFormulario();
-            JOptionPane.showMessageDialog(
+        }
+        if (filaSeleccionada < 0) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Es necesario elegir una membresia"
+                );
+                return;
+            }
+            Membresia membresia = DatosRep.MEMBRESIAS.obtener(filaSeleccionada);
+            if (membresia == null) {
+                return;
+            }
+            int respuesta = JOptionPane.showConfirmDialog(
                     this,
-                    "Membresia eliminada correctamente"
-            );        
-            
-        } else {    
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Error al eliminar la membresia"
-            );        
-        }    
+                    "¿Desea eliminar la membresia " + membresia.getNombrePlan() + "?",
+                    "Confirmar eliminacion",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (respuesta != JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            boolean eliminado = DatosRep.MEMBRESIAS.eliminar(filaSeleccionada);
+            if (eliminado) {
+                cargarTabla();
+                limpiarFormulario();
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Membresia eliminada correctamente"
+                );
+
+            } else {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error al eliminar la membresia"
+                );
+            }
+           
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
@@ -418,27 +444,7 @@ public class FrmMembresias extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmMembresias().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
