@@ -27,7 +27,7 @@ public class FrmPagos extends javax.swing.JFrame {
     private int filaSeleccionada = -1;
 
     private Usuario usuarioActivo;
-    private final ArrayList<Cliente> clientesDisponibles = new ArrayList<>();
+    private final ArrayList<Cliente> clientesDisponibles = new ArrayList<Cliente>();
 
     /**
      * Creates new form FrmPagos
@@ -43,6 +43,7 @@ public class FrmPagos extends javax.swing.JFrame {
         cargarTabla();
         limpiarFormulario();
 
+        cmbClienteActionPerformed(null);
         setLocationRelativeTo(null);
 
     }
@@ -64,7 +65,6 @@ public class FrmPagos extends javax.swing.JFrame {
                 new Object[]{
                     "Nombre",
                     "Membresia",
-                    "Usuario",
                     "Fecha",
                     "Metodo Pago",
                     "Monto"
@@ -111,12 +111,10 @@ public class FrmPagos extends javax.swing.JFrame {
 
         for (Pago pago : DatosRep.PAGOS.obtenerTodos()) {
             String nombreCliente = pago.getCliente() == null ? "No registrado" : pago.getCliente().getNombreCompleto();
-            String nombreUsuario = pago.getUsuarioRegistra() == null ? "No registrado" : pago.getUsuarioRegistra().getNombreUsuario();
 
             modelo.addRow(new Object[]{
                 nombreCliente,
                 //                nombreMembresia,
-                nombreUsuario,
                 pago.getFechaPago(),
                 pago.getMetodoPago(),
                 String.format("₡ %.2f", pago.getMonto())
@@ -264,6 +262,7 @@ public class FrmPagos extends javax.swing.JFrame {
         btnNuevo.addActionListener(this::btnNuevoActionPerformed);
 
         cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCliente.addActionListener(this::cmbClienteActionPerformed);
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
@@ -475,6 +474,20 @@ public class FrmPagos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se pudo eliminar el pago.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
+        int indice = cmbCliente.getSelectedIndex();
+
+        if (indice >= 0 && indice < clientesDisponibles.size()) {
+            Cliente clienteSeleccionado = clientesDisponibles.get(indice);
+//            Membresia membresia = clienteSeleccionado.getMembresiaAsignada();
+
+//            txtMembresia.setText(membresia != null ? membresia.getNombrePlan() : "Sin membresia asignada");
+        } else {
+            txtMembresia.setText("");
+        }
+
+    }//GEN-LAST:event_cmbClienteActionPerformed
 
     /**
      * @param args the command line arguments
