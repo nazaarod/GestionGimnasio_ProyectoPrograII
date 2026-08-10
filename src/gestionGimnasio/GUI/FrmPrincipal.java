@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package gestionGimnasio.GUI;
 
 import javax.swing.JOptionPane;
-
+import gestionGimnasio.Usuario;
+import gestionGimnasio.Utilidades;
 /**
  *
  * @author jeank
@@ -13,12 +11,13 @@ import javax.swing.JOptionPane;
 public class FrmPrincipal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPrincipal.class.getName());
-
+    Usuario usuarioActivo;
     /**
      * Creates new form FrmPrincipal
      */
-    public FrmPrincipal() {
+    public FrmPrincipal(Usuario u) {
         initComponents();
+        usuarioActivo= u;
 
         setLocationRelativeTo(null);
     }
@@ -173,39 +172,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        FrmUsuarios usuarios = new FrmUsuarios();
-        usuarios.setVisible(true);
+        
+        if(Utilidades.ValidarPermiso(usuarioActivo))
+        {
+            FrmUsuarios usuarios = new FrmUsuarios();
+            usuarios.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos necesarios", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnMembresiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiasActionPerformed
-        FrmMembresias membresias = new FrmMembresias();
+        FrmMembresias membresias = new FrmMembresias(usuarioActivo);
         membresias.setVisible(true);
     }//GEN-LAST:event_btnMembresiasActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmPrincipal().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
