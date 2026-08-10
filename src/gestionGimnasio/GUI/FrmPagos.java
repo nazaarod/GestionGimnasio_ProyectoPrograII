@@ -10,7 +10,6 @@ import gestionGimnasio.Usuario;
 import gestionGimnasio.Membresia;
 import gestionGimnasio.DatosRep;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
@@ -27,19 +26,19 @@ public class FrmPagos extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPagos.class.getName());
     private int filaSeleccionada = -1;
 
+    private Usuario usuarioActivo;
     private final ArrayList<Cliente> clientesDisponibles = new ArrayList<>();
-    private final ArrayList<Usuario> usuariosDisponibles = new ArrayList<>();
 
     /**
      * Creates new form FrmPagos
      */
     public FrmPagos() {
+
         initComponents();
 
         configurarSpinnerMonto();
         configurarTabla();
         cargarClientes();
-        cargarUsuarios();
         cargarMetodosPago();
         cargarTabla();
         limpiarFormulario();
@@ -92,27 +91,17 @@ public class FrmPagos extends javax.swing.JFrame {
         for (Cliente cliente : clientesDisponibles) {
             cmbCliente.addItem(cliente.getIdentificacion() + " - " + cliente.getNombreCompleto());
         }
-    }
 
-    private void cargarUsuarios() {
-
-        usuariosDisponibles.clear();
-        cmbUsuario.removeAllItems();
-
-        usuariosDisponibles.addAll(DatosRep.USUARIOS.obtenerTodos());
-
-        for (Usuario usuario : usuariosDisponibles) {
-            cmbUsuario.addItem(usuario.getNombreUsuario());
-        }
     }
 
     private void cargarMetodosPago() {
 
         cmbMetodoPago.removeAllItems();
-        cmbMetodoPago.addItem("Efectivo");
         cmbMetodoPago.addItem("Tarjeta");
+        cmbMetodoPago.addItem("Efectivo");
         cmbMetodoPago.addItem("Transferencia");
         cmbMetodoPago.addItem("Sinpe Movil");
+        cmbMetodoPago.addItem("Paypal");
     }
 
     private void cargarTabla() {
@@ -138,7 +127,6 @@ public class FrmPagos extends javax.swing.JFrame {
     private Pago crearPagoDesdeFormulario() {
 
         Cliente clienteSeleccionado = clientesDisponibles.get(cmbCliente.getSelectedIndex());
-        Usuario usuarioSeleccionado = usuariosDisponibles.get(cmbUsuario.getSelectedIndex());
         String metodoPagoSeleccionado = (String) cmbMetodoPago.getSelectedItem();
 
         double monto = ((Number) spnMonto.getValue()).doubleValue();
@@ -148,19 +136,14 @@ public class FrmPagos extends javax.swing.JFrame {
                 LocalDate.now(),
                 monto,
                 metodoPagoSeleccionado,
-                usuarioSeleccionado
-        );
+                usuarioActivo);
+
     }
 
     private boolean validarCampos() {
 
         if (cmbCliente.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-
-        if (cmbUsuario.getSelectedIndex() < 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un usuario.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
@@ -193,22 +176,7 @@ public class FrmPagos extends javax.swing.JFrame {
             }
         }
         return -1;
-    }
 
-    private int buscarIndiceUsuario(Usuario usuario) {
-
-        if (usuario == null) {
-            return -1;
-        }
-
-        for (int i = 0; i < usuariosDisponibles.size(); i++) {
-
-            if (usuario.getNombreUsuario().equals(usuariosDisponibles.get(i).getNombreUsuario())) {
-                return i;
-            }
-        }
-
-        return -1;
     }
 
     private void cargarPagosSeleccionada() {
@@ -235,10 +203,6 @@ public class FrmPagos extends javax.swing.JFrame {
             cmbCliente.setSelectedIndex(indiceCliente);
         }
 
-        int indiceUsuario = buscarIndiceUsuario(pago.getUsuarioRegistra());
-        if (indiceUsuario >= 0) {
-            cmbUsuario.setSelectedIndex(indiceUsuario);
-        }
     }
 
     private void limpiarFormulario() {
@@ -249,10 +213,6 @@ public class FrmPagos extends javax.swing.JFrame {
 
         if (cmbCliente.getItemCount() > 0) {
             cmbCliente.setSelectedIndex(0);
-        }
-
-        if (cmbUsuario.getItemCount() > 0) {
-            cmbUsuario.setSelectedIndex(0);
         }
 
         if (cmbMetodoPago.getItemCount() > 0) {
@@ -274,8 +234,6 @@ public class FrmPagos extends javax.swing.JFrame {
     private void initComponents() {
 
         spnMonto = new javax.swing.JSpinner();
-        cmbUsuario = new javax.swing.JComboBox<>();
-        lblUsuario = new javax.swing.JLabel();
         lblMetodoPago = new javax.swing.JLabel();
         lblCliente = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
@@ -296,10 +254,6 @@ public class FrmPagos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(875, 576));
-
-        cmbUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        lblUsuario.setText("Usuario:");
 
         lblMetodoPago.setText("Metodo de Pago:");
         lblMetodoPago.setRequestFocusEnabled(false);
@@ -357,40 +311,29 @@ public class FrmPagos extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(276, 276, 276)
+                        .addGap(314, 314, 314)
                         .addComponent(lblTitulo))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)))
+                        .addContainerGap(38, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMembresia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMembresia, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtFechaPago, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtFechaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblMetodoPago))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addComponent(lblMetodoPago)
+                            .addComponent(lblMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spnMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(398, 398, 398))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,22 +362,20 @@ public class FrmPagos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFecha)
-                            .addComponent(txtFechaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCliente)
-                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMetodoPago)
+                            .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblUsuario)
-                            .addComponent(lblMetodoPago)
-                            .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblMembresia)
+                            .addComponent(txtMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMonto)
+                            .addComponent(spnMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(54, 54, 54))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblMembresia)
-                        .addComponent(lblMonto)
-                        .addComponent(spnMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblFecha)
+                        .addComponent(txtFechaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -568,7 +509,6 @@ public class FrmPagos extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JComboBox<String> cmbMetodoPago;
-    private javax.swing.JComboBox<String> cmbUsuario;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblFecha;
@@ -576,7 +516,6 @@ public class FrmPagos extends javax.swing.JFrame {
     private javax.swing.JLabel lblMetodoPago;
     private javax.swing.JLabel lblMonto;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblUsuario;
     private javax.swing.JSpinner spnMonto;
     private javax.swing.JTable tblPagos;
     private javax.swing.JTextField txtFechaPago;
