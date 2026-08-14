@@ -6,10 +6,10 @@ public class Instructor extends Persona
 { 
     private String especialidad;
     //Constructor
-    public Instructor(String identificacion, String nombreCompleto, String telefono, String correo, String especialidad, String estado) 
+    public Instructor(String identificacion, String nombre, String telefono, String especialidad, String estado) 
     {
 
-        super(identificacion, nombreCompleto, telefono, correo, estado);
+        super(identificacion, nombre, telefono, estado);
         this.especialidad = especialidad;
     }
 
@@ -37,9 +37,7 @@ public class Instructor extends Persona
         String texto = "<html><div style='text-align: center;'>"
                      + "<h1>Instructor</h1>"
                      + "Identificacion: "+identificacion+"<br>"
-                     + "Nombre Completo: "+nombreCompleto+"<br>"
                      + "Telefono: "+telefono+"<br>"
-                     + "correo: "+correo+"<br>"
                      + "</div></html>";
 
         //Se proceden a enviar los cambios a la etiqueta y luego se muestra en la pantalla

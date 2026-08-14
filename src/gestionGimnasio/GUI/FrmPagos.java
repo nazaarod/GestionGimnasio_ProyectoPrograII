@@ -89,7 +89,7 @@ public class FrmPagos extends javax.swing.JFrame {
 
 //        clientesDisponibles.addAll(DatosRep.CLIENTES.obtenerTodos());
         for (Cliente cliente : clientesDisponibles) {
-            cmbCliente.addItem(cliente.getIdentificacion() + " - " + cliente.getNombreCompleto());
+            cmbCliente.addItem(cliente.getIdentificacion() + " - " + cliente.getNombre());
         }
 
     }
@@ -250,8 +250,8 @@ public class FrmPagos extends javax.swing.JFrame {
         txtFechaPago = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(875, 576));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("GestionGimnasio - Gestión de Pagos");
 
         lblMetodoPago.setText("Metodo de Pago:");
         lblMetodoPago.setRequestFocusEnabled(false);
@@ -453,7 +453,7 @@ public class FrmPagos extends javax.swing.JFrame {
         int respuesta = JOptionPane.showConfirmDialog(
                 this,
                 "¿Desea eliminar el pago?"
-                + pago.getCliente() + "-" + pago.getCliente().getNombreCompleto()
+                + pago.getCliente() + "-" + pago.getCliente().getNombre()
                 + "?",
                 "Confirmar eliminacion",
                 JOptionPane.YES_NO_OPTION,

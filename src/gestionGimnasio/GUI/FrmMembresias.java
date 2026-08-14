@@ -179,8 +179,8 @@ public class FrmMembresias extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMembresias = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(850, 650));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("GestionGimnasio - Gestión de Membresias");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblTitulo.setText("Administracion de Membresias");
@@ -318,6 +318,8 @@ public class FrmMembresias extends javax.swing.JFrame {
                     .addComponent(jScrollPane1))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleName("GestionGimnasio - Gestión de Membresias");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

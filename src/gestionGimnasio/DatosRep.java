@@ -8,4 +8,5 @@ public class DatosRep
     public static final Repositorio<Usuario> USUARIOS = new Repositorio<Usuario>();
     
     public static final Repositorio<Membresia> MEMBRESIAS = new Repositorio<Membresia>();
+    public static final Repositorio<Ejercicio> EJERCICIOS = new Repositorio<Ejercicio>();
 }

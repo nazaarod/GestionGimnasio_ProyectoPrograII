@@ -4,10 +4,6 @@
  */
 package gestionGimnasio;
 
-/**
- *
- * @author Ideapad S145
- */
 public class Membresia implements Resumible{
     private String codigoMembresia;
     private String nombrePlan;
@@ -23,6 +19,12 @@ public class Membresia implements Resumible{
         this.precioPlan = 0.0;
         this.descripcionPlan = "Sin descripcion";
         this.estado = "Inactivo";
+    }    
+    
+    // se usa para la base de datos
+    public Membresia(String codigoMembresia, String nombrePlan){
+        this.codigoMembresia = codigoMembresia;
+        this.nombrePlan = nombrePlan;
     }    
     
     public Membresia(String codigoMembresia, String nombrePlan, int vigenciaDias, double precioPlan){
