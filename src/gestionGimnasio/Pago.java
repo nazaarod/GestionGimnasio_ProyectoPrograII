@@ -9,10 +9,10 @@ import java.time.LocalDate;
 public class Pago implements Resumible {
 
     private Cliente cliente;
+    private Membresia membresia;
     private LocalDate fechaPago;
     private double monto;
     private String metodoPago;
-    private Usuario usuarioRegistra;
 
     public Pago() {
 
@@ -22,12 +22,13 @@ public class Pago implements Resumible {
 
     }
 
-    public Pago(Cliente cliente, LocalDate fechaPago, double monto, String metodoPago, Usuario usuarioRegistra) {
+    public Pago(Cliente cliente, Membresia membresia, LocalDate fechaPago, String metodoPago, double monto) {
+
         this.cliente = cliente;
-        this.fechaPago = LocalDate.now();
+        this.membresia = membresia;
+        this.fechaPago = fechaPago;
         this.monto = monto;
         this.metodoPago = metodoPago;
-        this.usuarioRegistra = usuarioRegistra;
 
     }
 
@@ -44,6 +45,20 @@ public class Pago implements Resumible {
         } else {
 
             this.cliente = cliente;
+        }
+    }
+
+    public Membresia getMembresia() {
+        return membresia;
+    }
+
+    public void setMembresia(Membresia membresia) {
+        if (membresia == null) {
+            System.out.println(" La membresia no puede ser null ");
+
+        } else {
+
+            this.membresia = membresia;
         }
     }
 
@@ -86,30 +101,19 @@ public class Pago implements Resumible {
 
     }
 
-    public Usuario getUsuarioRegistra() {
-
-        return usuarioRegistra;
-    }
-
-    public void setUsuarioRegistra(Usuario usuarioRegistra) {
-
-        this.usuarioRegistra = usuarioRegistra;
-
-    }
-
     @Override
     public void mostrarResumen() {
-        System.out.println("Nombre: " + cliente);
+        System.out.println("Cliente: " + cliente);
+        System.out.println("Membresia: " + membresia);
         System.out.println("Fecha: " + fechaPago);
         System.out.println("Monto: " + monto);
         System.out.println("Metodo de pago: " + metodoPago);
-        System.out.println("Usuario: " + usuarioRegistra);
         System.out.println("---------------------------------------------------");
     }
 
     @Override
     public String toString() {
-        return " Pago " + "cliente= " + "nombre= " + cliente + "monto= " + monto + "metodoPago= " + metodoPago;
+        return " Pago " + "cliente= " + cliente + "membresia=" + membresia + "monto= " + monto + "metodoPago= " + metodoPago;
     }
 
     public double mostrarMonto() {
