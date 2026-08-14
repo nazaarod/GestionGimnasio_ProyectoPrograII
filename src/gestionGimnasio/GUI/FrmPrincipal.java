@@ -41,8 +41,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnMembresias = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 400));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("GestionGimnasio - Menú Principal");
 
         btnPagos.setText("Pagos");
         btnPagos.addActionListener(this::btnPagosActionPerformed);

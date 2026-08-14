@@ -55,7 +55,8 @@ public class FrmUsuarios extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("GestionGimnasio - Gestión de Usuarios");
         setSize(new java.awt.Dimension(850, 650));
 
         lblContrasena.setText("Contraseña");

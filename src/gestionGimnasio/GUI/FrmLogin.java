@@ -55,7 +55,7 @@ public class FrmLogin extends javax.swing.JFrame {
         btnCrearCuenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Ventana_Login");
+        setTitle("GestionGimnasio - Login");
         setLocation(new java.awt.Point(500, 500));
         setResizable(false);
         setSize(new java.awt.Dimension(405, 500));

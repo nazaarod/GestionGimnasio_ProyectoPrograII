@@ -4,21 +4,19 @@ package gestionGimnasio;
 public abstract class Persona implements Resumible 
 {
     protected String identificacion;
-    protected String nombreCompleto;
+    protected String nombre;
     protected String telefono;
-    protected String correo;
     protected String estado;
 
     public Persona() {
         this.identificacion = "";
-        this.nombreCompleto = "Sin nombre";
+        this.nombre = "Sin nombre";
         this.telefono = "";
-        this.correo = "";
         this.estado = "Inactivo";
     }
         
     //Constructor manual de la clase.
-    public Persona(String identificacion, String nombreCompleto, String telefono, String correo, String estado) 
+    public Persona(String identificacion, String nombre, String telefono, String correo, String estado) 
     {
 
         if (identificacion == null || identificacion.trim().equals("")) {
@@ -27,17 +25,18 @@ public abstract class Persona implements Resumible
             this.identificacion = identificacion;
         }
 
-        if (nombreCompleto == null || nombreCompleto.trim().equals("")) {
-            this.nombreCompleto = "Sin nombre";
+        if (nombre == null || nombre.trim().equals("")) {
+            this.nombre = "Sin nombre";
         } else {
-            this.nombreCompleto = nombreCompleto;
+            this.nombre = nombre;
         }
 
         this.telefono = telefono;
-        this.correo = correo;
         this.estado = estado;
     }
-    public Persona(String identificacion, String nombreCompleto, String telefono, String correo) 
+    
+    //Constructor para BD
+    public Persona(String identificacion, String nombre, String telefono) 
     {
 
         if (identificacion == null || identificacion.trim().equals("")) {
@@ -46,14 +45,30 @@ public abstract class Persona implements Resumible
             this.identificacion = identificacion;
         }
 
-        if (nombreCompleto == null || nombreCompleto.trim().equals("")) {
-            this.nombreCompleto = "Sin nombre";
+        if (nombre == null || nombre.trim().equals("")) {
+            this.nombre = "Sin nombre";
         } else {
-            this.nombreCompleto = nombreCompleto;
+            this.nombre = nombre;
         }
 
         this.telefono = telefono;
-        this.correo = correo;
+    }
+    public Persona(String identificacion, String nombre, String telefono, String correo) 
+    {
+
+        if (identificacion == null || identificacion.trim().equals("")) {
+            this.identificacion = "";
+        } else {
+            this.identificacion = identificacion;
+        }
+
+        if (nombre == null || nombre.trim().equals("")) {
+            this.nombre = "Sin nombre";
+        } else {
+            this.nombre = nombre;
+        }
+
+        this.telefono = telefono;
         this.estado = "Inactivo";
     }
 
@@ -70,16 +85,16 @@ public abstract class Persona implements Resumible
         }
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
+    public void setNombre(String nombre) {
 
-        if (nombreCompleto == null || nombreCompleto.trim().equals("")) {
+        if (nombre == null || nombre.trim().equals("")) {
             System.out.println("El nombre no es valido");
         } else {
-            this.nombreCompleto = nombreCompleto;
+            this.nombre = nombre;
         }
     }
 
@@ -93,19 +108,6 @@ public abstract class Persona implements Resumible
             System.out.println("El telefono no es válido");
         } else {
             this.telefono = telefono;
-        }
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-
-        if (correo == null || correo.trim().equals("")) {
-            System.out.println("El correo no es valido");
-        } else {
-            this.correo = correo;
         }
     }
 
