@@ -16,10 +16,21 @@ public class Pago implements Resumible {
 
     public Pago() {
 
+        this.cliente = null;
+        this.membresia = null;
         this.metodoPago = "";
         this.monto = 0.0;
         this.fechaPago = LocalDate.now();
 
+    }
+
+    public Pago(Cliente cliente, Membresia membresia, double monto) {
+
+        this.cliente = cliente;
+        this.membresia = membresia;
+        this.monto = monto;
+        this.fechaPago = LocalDate.now();
+        this.metodoPago = "";
     }
 
     public Pago(Cliente cliente, Membresia membresia, LocalDate fechaPago, String metodoPago, double monto) {
@@ -113,7 +124,7 @@ public class Pago implements Resumible {
 
     @Override
     public String toString() {
-        return " Pago " + "cliente= " + cliente + "membresia=" + membresia + "monto= " + monto + "metodoPago= " + metodoPago;
+        return " Pago= " + "cliente= " + cliente + "membresia=" + membresia + "fechaPago=" + fechaPago + "monto= " + monto + "metodoPago= " + metodoPago;
     }
 
     public double mostrarMonto() {

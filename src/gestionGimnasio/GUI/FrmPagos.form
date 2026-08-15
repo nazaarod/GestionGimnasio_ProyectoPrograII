@@ -56,9 +56,9 @@
                                   <Component id="lblMembresia" min="-2" pref="67" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="spnMonto" min="-2" pref="144" max="-2" attributes="0"/>
-                                  <Component id="cmbMembresia" min="-2" pref="191" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="cmbMembresia" pref="191" max="32767" attributes="0"/>
+                                  <Component id="txtMonto" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -101,9 +101,9 @@
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblMonto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="spnMonto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblMetodoPago" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbMetodoPago" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMonto" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                   </Group>
@@ -128,8 +128,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JSpinner" name="spnMonto">
-    </Component>
     <Component class="javax.swing.JLabel" name="lblMetodoPago">
       <Properties>
         <Property name="text" type="java.lang.String" value="Metodo de Pago:"/>
@@ -271,9 +269,14 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbMembresiaActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtMonto">
     </Component>
   </SubComponents>
 </Form>
