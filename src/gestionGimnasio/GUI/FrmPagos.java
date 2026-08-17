@@ -10,9 +10,7 @@ import gestionGimnasio.Membresia;
 import gestionGimnasio.DatosRep;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
@@ -21,10 +19,10 @@ import java.util.ArrayList;
  * @author jeank
  */
 public class FrmPagos extends javax.swing.JFrame {
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPagos.class.getName());
     private int filaSeleccionada = -1;
-
+    
     private final ArrayList<Membresia> membresiasDisponibles = new ArrayList<Membresia>();
     private final ArrayList<Cliente> clientesDisponibles = new ArrayList<Cliente>();
 
@@ -32,36 +30,23 @@ public class FrmPagos extends javax.swing.JFrame {
      * Creates new form FrmPagos
      */
     public FrmPagos() {
-
+        
         initComponents();
-
-        configurarSpinnerMonto();
+        
         configurarTabla();
         cargarTabla();
         cargarClientes();
         cargarMetodosPago();
         cargarMembresias();
-
+        
         limpiarFormulario();
-
+        
         setLocationRelativeTo(null);
-
+        
     }
-
-    private void configurarSpinnerMonto() {
-
-        spnMonto.setModel(new SpinnerNumberModel(
-                0.0,
-                0.0,
-                10000000.0,
-                500.0));
-
-        spnMonto.setEditor(new JSpinner.NumberEditor(spnMonto, "0.00"));
-
-    }
-
+    
     private void configurarTabla() {
-
+        
         DefaultTableModel modelo = new DefaultTableModel(
                 new Object[]{
                     "Cliente",
@@ -77,46 +62,62 @@ public class FrmPagos extends javax.swing.JFrame {
                 return false;
             }
         };
-
+        
         tblPagos.setModel(modelo);
         tblPagos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblPagos.getTableHeader().setReorderingAllowed(false);
-
+        
         tblPagos.getColumnModel().getColumn(0).setPreferredWidth(150);
         tblPagos.getColumnModel().getColumn(1).setPreferredWidth(150);
         tblPagos.getColumnModel().getColumn(2).setPreferredWidth(150);
         tblPagos.getColumnModel().getColumn(3).setPreferredWidth(150);
         tblPagos.getColumnModel().getColumn(4).setPreferredWidth(150);
     }
-
+    
     private void cargarClientes() {
-
+        
         clientesDisponibles.clear();
         cmbCliente.removeAllItems();
-
+        
         clientesDisponibles.addAll(DatosRep.CLIENTES.obtenerTodos());
-
+        
         for (Cliente cliente : clientesDisponibles) {
             cmbCliente.addItem(cliente.getIdentificacion() + " - " + cliente.getNombre());
         }
-
+        
     }
-
+    
     private void cargarMembresias() {
-
+        
         membresiasDisponibles.clear();
         cmbMembresia.removeAllItems();
-
+        
         membresiasDisponibles.addAll(DatosRep.MEMBRESIAS.obtenerTodos());
-
+        
         for (Membresia membresia : membresiasDisponibles) {
             cmbMembresia.addItem(membresia.getCodigoMembresia() + " - " + membresia.getNombrePlan());
-
+            
+        }
+        
+        actualizarMonto();
+    }
+    
+    private void actualizarMonto() {
+        
+        int indiceMembresia = cmbMembresia.getSelectedIndex();
+        
+        if (indiceMembresia >= 0 && indiceMembresia < membresiasDisponibles.size()) {
+            
+            Membresia membresiasSeleccionada = membresiasDisponibles.get(indiceMembresia);
+            
+            txtMonto.setText(String.format(" %,.2f", membresiasSeleccionada.getPrecioPlan()));
+        } else {
+            txtMonto.setText("0.00");
         }
     }
-
+    
     private void cargarMetodosPago() {
-
+        
         cmbMetodoPago.removeAllItems();
         cmbMetodoPago.addItem("Tarjeta");
         cmbMetodoPago.addItem("Efectivo");
@@ -124,35 +125,35 @@ public class FrmPagos extends javax.swing.JFrame {
         cmbMetodoPago.addItem("Sinpe Movil");
         cmbMetodoPago.addItem("Paypal");
     }
-
+    
     private void cargarTabla() {
-
+        
         DefaultTableModel modelo = (DefaultTableModel) tblPagos.getModel();
         modelo.setRowCount(0);
-
+        
         for (Pago pago : DatosRep.PAGOS.obtenerTodos()) {
-
+            
             String nombreCliente = pago.getCliente() == null ? "No registrado" : pago.getCliente().getNombre();
             String nombreMembresia = pago.getMembresia() == null ? "No registrada" : pago.getMembresia().getNombrePlan();
-
+            
             modelo.addRow(new Object[]{
                 nombreCliente,
                 nombreMembresia,
                 pago.getFechaPago(),
                 pago.getMetodoPago(),
-                String.format("₡ %.2f", pago.getMonto())
+                String.format("₡ %,.2f", pago.getMonto())
             });
         }
     }
-
+    
     private Pago crearPagoDesdeFormulario() {
-
+        
         Cliente clienteSeleccionado = clientesDisponibles.get(cmbCliente.getSelectedIndex());
         Membresia membresiaSeleccionado = membresiasDisponibles.get(cmbMembresia.getSelectedIndex());
         String metodoPagoSeleccionado = (String) cmbMetodoPago.getSelectedItem();
-
-        double monto = ((Number) spnMonto.getValue()).doubleValue();
-
+        
+        double monto = Double.parseDouble(txtMonto.getText());
+        
         return new Pago(
                 clienteSeleccionado,
                 membresiaSeleccionado,
@@ -161,14 +162,14 @@ public class FrmPagos extends javax.swing.JFrame {
                 monto
         );
     }
-
+    
     private boolean validarCampos() {
-
+        
         if (cmbCliente.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
             return false;
         }
-
+        
         if (cmbMetodoPago.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un metodo de pago.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
             return false;
@@ -177,67 +178,67 @@ public class FrmPagos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una membresia.", "Dato requerido", JOptionPane.WARNING_MESSAGE);
             return false;
         }
-
-        double monto = ((Number) spnMonto.getValue()).doubleValue();
-
+        
+        double monto = Double.parseDouble(txtMonto.getText());
+        
         if (monto <= 0) {
             JOptionPane.showMessageDialog(this, "El monto debe ser mayor que cero.", "Monto invalido", JOptionPane.WARNING_MESSAGE);
-            spnMonto.requestFocus();
+            
             return false;
         }
-
+        
         return true;
     }
-
+    
     private int buscarIndiceCliente(Cliente cliente) {
-
+        
         if (cliente == null) {
             return -1;
         }
-
+        
         for (int i = 0; i < clientesDisponibles.size(); i++) {
-
+            
             if (cliente.getIdentificacion().equals(clientesDisponibles.get(i).getIdentificacion())) {
                 return i;
             }
         }
         return -1;
-
+        
     }
-
+    
     private int buscarIndiceMembresia(Membresia membresia) {
         if (membresia == null) {
             return -1;
         }
-
+        
         for (int i = 0; i < membresiasDisponibles.size(); i++) {
-
+            
             if (membresia.getCodigoMembresia().equals(membresiasDisponibles.get(i).getCodigoMembresia())) {
                 return i;
             }
         }
         return -1;
     }
-
+    
     private void cargarPagosSeleccionada() {
-
+        
         int fila = tblPagos.getSelectedRow();
-
+        
         if (fila < 0) {
             return;
         }
-
+        
         filaSeleccionada = fila;
-
+        
         Pago pago = DatosRep.PAGOS.obtener(filaSeleccionada);
-
+        
         if (pago == null) {
             return;
         }
-
-        spnMonto.setValue(pago.getMonto());
+        
+        txtMonto.setText(String.format(" %,.2f", pago.getMonto()));
         cmbMetodoPago.setSelectedItem(pago.getMetodoPago());
-
+        
         int indiceCliente = buscarIndiceCliente(pago.getCliente());
         if (indiceCliente >= 0) {
             cmbCliente.setSelectedIndex(indiceCliente);
@@ -247,26 +248,27 @@ public class FrmPagos extends javax.swing.JFrame {
             cmbMembresia.setSelectedIndex(indiceMembresia);
         }
     }
-
+    
     private void limpiarFormulario() {
-
+        
+        txtMonto.setText("0.00");
         txtFechaPago.setText(LocalDate.now().toString());
-
+        
         if (cmbCliente.getItemCount() > 0) {
             cmbCliente.setSelectedIndex(0);
         }
-
+        
         if (cmbMetodoPago.getItemCount() > 0) {
             cmbMetodoPago.setSelectedIndex(0);
         }
-
+        
         if (cmbMembresia.getItemCount() > 0) {
             cmbMembresia.setSelectedIndex(0);
         }
-
+        
         tblPagos.clearSelection();
         filaSeleccionada = -1;
-
+        
     }
 
     /**
@@ -278,7 +280,6 @@ public class FrmPagos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        spnMonto = new javax.swing.JSpinner();
         lblMetodoPago = new javax.swing.JLabel();
         lblCliente = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
@@ -296,6 +297,7 @@ public class FrmPagos extends javax.swing.JFrame {
         txtFechaPago = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         cmbMembresia = new javax.swing.JComboBox<>();
+        txtMonto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GestionGimnasio - Gestión de Pagos");
@@ -352,6 +354,7 @@ public class FrmPagos extends javax.swing.JFrame {
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         cmbMembresia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbMembresia.addActionListener(this::cmbMembresiaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -383,9 +386,9 @@ public class FrmPagos extends javax.swing.JFrame {
                                     .addComponent(lblMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(spnMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cmbMembresia, 0, 191, Short.MAX_VALUE)
+                                    .addComponent(txtMonto)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -418,9 +421,9 @@ public class FrmPagos extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblMonto)
-                            .addComponent(spnMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMetodoPago)
-                            .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(54, 54, 54))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblFecha)
@@ -449,13 +452,13 @@ public class FrmPagos extends javax.swing.JFrame {
         if (!validarCampos()) {
             return;
         }
-
+        
         Pago pago = crearPagoDesdeFormulario();
         DatosRep.PAGOS.agregar(pago);
-
+        
         cargarTabla();
         limpiarFormulario();
-
+        
         JOptionPane.showMessageDialog(this, "Pago registrado correctamente.", "Registro realizado", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -464,14 +467,14 @@ public class FrmPagos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un pago en la tabla.", "Pago no seleccionado", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        
         if (!validarCampos()) {
             return;
         }
-
+        
         Pago pagoActualizado = crearPagoDesdeFormulario();
         boolean actualizado = DatosRep.PAGOS.actualizar(filaSeleccionada, pagoActualizado);
-
+        
         if (actualizado) {
             cargarTabla();
             limpiarFormulario();
@@ -494,28 +497,28 @@ public class FrmPagos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un pago en la tabla.", "Pago no seleccionado", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        
         Pago pago = DatosRep.PAGOS.obtener(filaSeleccionada);
         if (pago == null) {
             return;
         }
-
+        
         int respuesta = JOptionPane.showConfirmDialog(
                 this,
                 "¿Desea eliminar el pago?"
-                + pago.getCliente() + "-" + pago.getCliente().getNombre()
+                + pago.getCliente().getNombre()
                 + "?",
                 "Confirmar eliminacion",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
-
+        
         if (respuesta != JOptionPane.YES_OPTION) {
             return;
         }
-
+        
         boolean eliminado = DatosRep.PAGOS.eliminar(filaSeleccionada);
-
+        
         if (eliminado) {
             cargarTabla();
             limpiarFormulario();
@@ -524,6 +527,10 @@ public class FrmPagos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se pudo eliminar el pago.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cmbMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMembresiaActionPerformed
+        actualizarMonto();
+    }//GEN-LAST:event_cmbMembresiaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -566,8 +573,9 @@ public class FrmPagos extends javax.swing.JFrame {
     private javax.swing.JLabel lblMetodoPago;
     private javax.swing.JLabel lblMonto;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JSpinner spnMonto;
     private javax.swing.JTable tblPagos;
     private javax.swing.JTextField txtFechaPago;
+    private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
+
 }
